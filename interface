@@ -1,0 +1,19 @@
+// src/repositories/MenuItemRepository.ts
+import { MenuItem } from "../models/MenuItem";
+
+export interface MenuItemRepository {
+  getAll(): MenuItem[];
+  getById(id: number): MenuItem | undefined;
+  add(item: MenuItem): void;
+  update(item: MenuItem): void;
+  delete(id: number): void;
+}
+
+// src/repositories/OrderRepository.ts
+import { Order } from "../models/Order";
+
+export interface OrderRepository {
+  getAll(): Order[];
+  getById(id: number): Order | undefined;
+  add(order: Order): void;
+}
