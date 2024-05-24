@@ -1,0 +1,16 @@
+// src/models/MenuItem.ts
+export interface MenuItem {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+}
+
+// src/models/Order.ts
+import { MenuItem } from "./MenuItem";
+
+export interface Order {
+  id: number;
+  items: MenuItem[];
+  total: number;
+}
