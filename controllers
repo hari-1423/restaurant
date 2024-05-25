@@ -1,0 +1,53 @@
+// src/controllers/menuController.ts
+import { Request, Response } from 'express';
+import { inject } from 'inversify';
+import { controller, httpGet } from 'inversify-express-utils';
+import { IMenuService } from '../interfaces/IMenuService';
+
+@controller('/menu')
+export class MenuController {
+    constructor(
+        @inject('IMenuService') private menuService: IMenuService
+    ) {}
+
+    @httpGet('/')
+    public getMenuItems(req: Request, res: Response): void {
+        const menuItems = this.menuService.getAllMenuItems();
+        res.json(menuItems);
+    }
+}
+
+// src/controllers/orderController.ts
+import { Request, Response } from 'express';
+import { inject } from 'inversify';
+import { controller, httpPost, httpGet } from 'inversify-express-utils';
+import { IOrderService } from '../interfaces/IOrderService';
+
+@controller('/orders')
+export class OrderController {
+    constructor(
+        @inject('IOrderService') private orderService: IOrderService
+    ) {}
+
+    @httpPost('/')
+    public createOrder(req: Request, res: Response): void {
+        const { menuItemIds } = req.body;
+        try {
+            const order = this.orderService.createOrder(menuItemIds);
+            res.json(order);
+        } catch (error) {
+            res.status(400).send(error.message);
+        }
+    }
+
+    @httpGet('/:id')
+    public getOrder(req: Request, res: Response): void {
+        const orderId = parseInt(req.params.id, 10);
+        const order = this.orderService.getOrderById(orderId);
+        if (order) {
+            res.json(order);
+        } else {
+            res.status(404).send('Order not found');
+        }
+    }
+}
