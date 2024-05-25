@@ -1,0 +1,19 @@
+// src/inversify.config.ts
+import { Container } from 'inversify';
+import { IMenuService } from './interfaces/IMenuService';
+import { IOrderService } from './interfaces/IOrderService';
+import { IMenuRepository } from './interfaces/IMenuRepository';
+import { IOrderRepository } from './interfaces/IOrderRepository';
+import { MenuService } from './services/menuService';
+import { OrderService } from './services/orderService';
+import { MenuRepository } from './repositories/menuRepository';
+import { OrderRepository } from './repositories/orderRepository';
+
+const container = new Container();
+
+container.bind<IMenuService>('IMenuService').to(MenuService);
+container.bind<IOrderService>('IOrderService').to(OrderService);
+container.bind<IMenuRepository>('IMenuRepository').to(MenuRepository);
+container.bind<IOrderRepository>('IOrderRepository').to(OrderRepository);
+
+export { container };
